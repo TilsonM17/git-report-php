@@ -12,7 +12,7 @@ class ReportHtmlCommandTest extends TestCase{
      */
     public function testReportHtmlCommand()
     {
-        $this->artisan('git:report-html')
+        $this->artisan('git-report:html --author=tilson')
             ->expectsOutput('Generating report in HTML format...')
             ->assertExitCode(0);
     }
