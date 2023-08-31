@@ -1,2 +1,2 @@
 t:
-	./vendor/bin/phpunit test/ExceptionTest.php
+	./vendor/bin/phpunit test/Feature/ReportHtmlCommandTest.php
