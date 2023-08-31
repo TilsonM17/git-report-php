@@ -2,6 +2,7 @@
 
 namespace Tilson\GitReportPhp;
 
+use Illuminate\Support\Collection;
 use Tilson\GitReportPhp\Contract\GitLogContract;
 use Tilson\GitReportPhp\Exception\GitNotIsInstalled;
 use Tilson\GitReportPhp\Report\ReportHtml;
@@ -22,23 +23,25 @@ class GitLogCommand implements GitLogContract
     private string $command = "git log --pretty='%s'";
 
     public function checkIfGitIsInstalled()
-    {   
-        dd(base_path());
-        if (!Process::run('git --version') || !file_exists( base_path().'/.git')) {
+    {
+        if (!Process::path(base_path())->run('git --version') || !file_exists(base_path() . '/.git')) {
             throw new GitNotIsInstalled();
         }
-        
     }
 
-    public function exec($path = null): array
+    /**
+     * @return @return \Illuminate\Support\Collection<TKey, TValue>
+     */
+    public function exec($path = null): Collection
     {
         $this->checkIfGitIsInstalled();
-        
-        Process::run();
-        exec($this->command, $allCommits);
 
-        empty($allCommits) ? $allCommits = (new ReportHtml)->generateReport($allCommits) : throw new \Exception("Error Processing Request", 1);
-        
-        return [$allCommits];
+        $allCommits = Process::path(base_path())->run($this->command);
+
+        !$allCommits->successful()
+            ? throw new \Exception("Error tracked in reading commits", 1)
+            : null;
+
+        return collect(explode("\n", $allCommits->output()));
     }
 }
