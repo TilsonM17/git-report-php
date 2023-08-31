@@ -2,6 +2,8 @@
 
 namespace Tilson\GitReportPhp\Contract;
 
+use Illuminate\Support\Collection;
+
 interface ReportContract{
     
     /**

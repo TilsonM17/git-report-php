@@ -12,7 +12,7 @@ class ReportHtmlCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'git-report:html {--author=} {--date-min=} {--date-max=} {--type=all}';
+    protected $signature = 'report:html {--author=} {--date-min=} {--date-max=} {--type=all}';
 
     /**
      * The console command description.

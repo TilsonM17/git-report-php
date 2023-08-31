@@ -2,6 +2,7 @@
 
 namespace Tilson\GitReportPhp\Report;
 
+use Illuminate\Support\Collection;
 use Tilson\GitReportPhp\Contract\ReportContract;
 use Tilson\GitReportPhp\GitLogCommand;
 
@@ -15,7 +16,7 @@ final class ReportHtml implements ReportContract
     /**
      * @param string $pattern
      */
-    private string $pattern = '/^(feat|fix|chore|docs|style|refactor|perf|test|revert|build)/';
+    private string $pattern = '/(?:\p{Emoji_Presentation})?\s*(feat|fix|chore|docs|style|refactor|perf|test|revert|build)/u';
 
     /**
      * @param array $matches
@@ -29,13 +30,14 @@ final class ReportHtml implements ReportContract
     public function generateReport(array $options)
     {
         $allCommits = app(GitLogCommand::class)->exec();
+        
+        $allCommits->each(function ($commit) {
+            if (preg_match($this->pattern, substr($commit, 0, 10), $this->matches)) {
+                array_push($this->commits, $this->matches[1]);
+            }
+        });
 
-        // foreach ($commits as  $value) {
-        //     if (preg_match($this->pattern, substr($value, 0, 10), $this->matches)) {
-        //         $this->matches[$this->matches[1]];
-        //     }
-        // }
 
-        // print_r($this->matches);
+         dd($this->commits, $allCommits);
     }
 }

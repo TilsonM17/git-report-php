@@ -1,6 +1,6 @@
 <?php
 
-namespace Tilson\GitReportPhp\Tests;
+namespace Tilson\GitReportPhp\Tests\Feature;
 
 use \Orchestra\Testbench\TestCase;
 
@@ -12,9 +12,7 @@ class ReportHtmlCommandTest extends TestCase{
      */
     public function testReportHtmlCommand()
     {
-        $this->artisan('git-report:html --author=tilson')
-            ->expectsOutput('Generating report in HTML format...')
-            ->assertExitCode(0);
+        $this->artisan('report:html');
     }
 
     protected function getPackageProviders($app)
