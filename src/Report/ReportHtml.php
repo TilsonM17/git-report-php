@@ -31,22 +31,52 @@ final class ReportHtml implements ReportContract
     private int $totalCommits = 0;
 
     /**
+     * @param string $label
+     */
+    private $label;
+
+    /**
      * @param Collection $totalCommits
      * @description Set total commits
      */
-    private function setTotalCommits(Collection $totalCommits)
+    public function setTotalCommits(Collection $totalCommits)
     {
         $this->totalCommits = $totalCommits->count();
     }
 
+    public function setLabel()
+    {
+        $uniqueCommits = collect($this->commits)->unique();
+
+        $this->label = implode(',', $uniqueCommits->map(function ($value) {
+            return  "'$value'";
+        })->toArray());
+
+    }
+
     private function createFolderAndCopyStubsFiles()
     {
-        // $filesystem = new Filesystem();
+        $newFile =  resource_path(
+            'report/report_html_' . date('Y_M_d_G_s_i') . '.html'
+        );
 
-        // $filesystem->makeDirectory(resource_path('report'), 0755, true);
+        $fileHasCoped = File::copy(
+            __DIR__ . '/../../stubs/report_stub',
+            $newFile
+        );
 
-        File::get(__DIR__ . '/../../stubs/report_stub');
-    
+        if (!$fileHasCoped) {
+            throw new \Exception('Error to copy file');
+        }
+
+        $replaced = str_replace(
+            '{{label}}',
+            "[{$this->label}]",
+            File::get($newFile)
+        );
+
+        File::put($newFile, $replaced);
+        dd($replaced);
     }
 
     /**
@@ -63,10 +93,9 @@ final class ReportHtml implements ReportContract
         });
 
         $this->setTotalCommits($allCommits);
-        dd($allCommits->pluck(''));
+
+        $this->setLabel();
+
         $this->createFolderAndCopyStubsFiles();
-        
-
-
     }
 }

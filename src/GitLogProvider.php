@@ -11,7 +11,7 @@ class GitLogProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ReportHtmlCommand::class,
-                // NetworkCommand::class,
+                // ReportCliCommand::class,
             ]);
         }
     }
