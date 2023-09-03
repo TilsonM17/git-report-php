@@ -55,8 +55,16 @@ class ReportHtmlCommand extends Command
     {
         $option = $this->getCommandOptions();
 
-        $reportHtml->generateReport($option);
+        $this->info('I will generate report in HTML format, wait please...');
 
-        $this->info('Generating report in HTML format...');
+        [$totalCommits, $pathForNewFile] = $reportHtml->generateReport($option);
+
+        echo PHP_EOL;
+
+        $this->info("Report generated with success:");
+
+        $this->line("Total commits: 😃 \e[1m{$totalCommits}");
+
+        $this->line("\e[25mPath for new file: 👉 \e[4m{$pathForNewFile}");
     }
 }

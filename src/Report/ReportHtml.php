@@ -35,12 +35,9 @@ final class ReportHtml implements ReportContract
      */
     private $label;
 
-    /**
-     * @param Collection $totalCommits
-     * @description Set total commits
-     */
+    private $labelData;
 
-    private function createFolderAndCopyStubsFiles()
+    private function createFolderAndCopyStubsFiles(): string
     {
         $newFile =  resource_path(
             'report/report_html_' . date('Y_M_d_G_s_i') . '.html'
@@ -55,13 +52,21 @@ final class ReportHtml implements ReportContract
             throw new \Exception('Error to copy file');
         }
 
-        $replaced = str_replace(
+        $replacedLabel = str_replace(
             '{{label}}',
             "[{$this->label}]",
             File::get($newFile)
         );
 
-        File::put($newFile, $replaced);
+        $replacedCommits = str_replace(
+            '{{commits}}',
+            "[{$this->labelData}]",
+            $replacedLabel
+        );
+
+        File::put($newFile, $replacedCommits);
+
+        return $newFile;
     }
 
     public function setTotalCommits(Collection $totalCommits)
@@ -78,7 +83,16 @@ final class ReportHtml implements ReportContract
         })->toArray());
     }
 
+    public function setLabelData()
+    {
+        $uniqueCommits = collect($this->commits)->unique();
 
+        $this->labelData = implode(',', $uniqueCommits->map(function ($value) {
+            return collect($this->commits)->filter(function ($commit) use ($value) {
+                return $commit === $value;
+            })->count();
+        })->toArray());
+    }
 
     /**
      * Generate report from git log
@@ -97,6 +111,13 @@ final class ReportHtml implements ReportContract
 
         $this->setLabel();
 
-        $this->createFolderAndCopyStubsFiles();
+        $this->setLabelData();
+
+        $pathForFile = $this->createFolderAndCopyStubsFiles();
+
+        return [
+            $this->totalCommits,
+            $pathForFile
+        ];
     }
 }
