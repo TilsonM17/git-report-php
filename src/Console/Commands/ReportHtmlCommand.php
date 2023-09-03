@@ -23,21 +23,24 @@ class ReportHtmlCommand extends Command
 
     /**
      * Get options from command
-     * 
+     *
      * @return array
      */
     private function getCommandOptions(): array
     {
         $option = [];
 
-        if ($this->option('author') != null)
+        if ($this->option('author') != null) {
             $option['author'] = $this->option('author');
+        }
 
-        if ($this->option('date-max') != null)
+        if ($this->option('date-max') != null) {
             $option['date-max'] = $this->option('date-max');
+        }
 
-        if ($this->option('date-min') != null)
+        if ($this->option('date-min') != null) {
             $option['date-min'] = $this->option('date-min');
+        }
 
         $option['type'] = $this->option('type');
 

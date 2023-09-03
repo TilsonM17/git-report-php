@@ -39,20 +39,6 @@ final class ReportHtml implements ReportContract
      * @param Collection $totalCommits
      * @description Set total commits
      */
-    public function setTotalCommits(Collection $totalCommits)
-    {
-        $this->totalCommits = $totalCommits->count();
-    }
-
-    public function setLabel()
-    {
-        $uniqueCommits = collect($this->commits)->unique();
-
-        $this->label = implode(',', $uniqueCommits->map(function ($value) {
-            return  "'$value'";
-        })->toArray());
-
-    }
 
     private function createFolderAndCopyStubsFiles()
     {
@@ -76,11 +62,26 @@ final class ReportHtml implements ReportContract
         );
 
         File::put($newFile, $replaced);
-        dd($replaced);
     }
 
+    public function setTotalCommits(Collection $totalCommits)
+    {
+        $this->totalCommits = $totalCommits->count();
+    }
+
+    public function setLabel()
+    {
+        $uniqueCommits = collect($this->commits)->unique();
+
+        $this->label = implode(',', $uniqueCommits->map(function ($value) {
+            return  "'$value'";
+        })->toArray());
+    }
+
+
+
     /**
-     * Generate report from git log     
+     * Generate report from git log
      */
     public function generateReport(array $options)
     {

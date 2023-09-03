@@ -3,15 +3,15 @@
 namespace Tilson\GitReportPhp\Exception;
 
 use Exception;
+
 use function Termwind\{render};
 
 class GitNotIsInstalled extends Exception
 {
-
     public function __construct()
     {
-    
-render(<<<'HTML'
+
+        render(<<<'HTML'
 <div>
     <div class="px-2 bg-red-600">Error</div>
     <em class="ml-1 text-sky-400">

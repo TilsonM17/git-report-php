@@ -4,10 +4,10 @@ namespace Tilson\GitReportPhp\Contract;
 
 use Illuminate\Support\Collection;
 
-interface ReportContract{
-    
+interface ReportContract
+{
     /**
-     * Generate report from git log     
+     * Generate report from git log
      * */
     public function generateReport(array $commits);
 }

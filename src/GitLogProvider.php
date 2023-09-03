@@ -1,6 +1,7 @@
 <?php
 
 namespace Tilson\GitReportPhp;
+
 use Illuminate\Support\ServiceProvider;
 use Tilson\GitReportPhp\Console\Commands\ReportHtmlCommand;
 
