@@ -19,7 +19,7 @@ class ReportHtmlCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generate a report in HTML format';
+    protected $description = 'Generate a report about git commits in HTML format';
 
     /**
      * Get options from command
@@ -63,8 +63,9 @@ class ReportHtmlCommand extends Command
 
         $this->info("Report generated with success:");
 
-        $this->line("Total commits: 😃 \e[1m{$totalCommits}");
+        $this->line("Total commits: 😃  {$totalCommits}");
+        echo PHP_EOL;
 
-        $this->line("\e[25mPath for new file: 👉 \e[4m{$pathForNewFile}");
+        $this->comment("Path for Report file file: 👉 {$pathForNewFile}");
     }
 }
