@@ -1,30 +1,30 @@
 ## Example
 
-Criar um relatorio de commits em html
+Create report of commits in html
 ```sh
-    php artisan git-report:html
+    php artisan report:html
 ```
 
-Criar um relatorio de commits no terminal
+Create report of commits in terminal
 ```sh
-    php artisan git-report:cli
+    php artisan report:cli
 ```
 
 ---
 
 ### Filters
 
-Filtrar por autor
+Filter for author
 ```sh
-    php artisan git-report:{html|cli} --author="Nome do autor"
+    php artisan git-report:{html|cli} --author="Name Author"
 ```
 
-Filtrar por data
+Filter for date
 ```sh
     php artisan git-report:{html|cli} --date="YYYY-MM-DD"
 ```
 
-Filtrar por tipo de commits
+Filter for type commits
 ```sh
     php artisan git-report:{html|cli} --type="feat|fix|docs|style|refactor|test|chore"
 ```
