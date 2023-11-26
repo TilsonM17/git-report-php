@@ -43,6 +43,12 @@ final class ReportHtml implements ReportContract
             'report/report_html_' . date('Y_M_d_G_s_i') . '.html'
         );
 
+        $reportFolder = resource_path('report/');
+
+        if (!File::exists($reportFolder)) {
+            File::makeDirectory($reportFolder, 0775, true);
+        }
+
         $fileHasCoped = File::copy(
             __DIR__ . '/../../stubs/report_stub',
             $newFile
