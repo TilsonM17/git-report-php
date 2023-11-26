@@ -3,7 +3,7 @@
     "description": "simple package for create report from git in php",
     "type": "library",
     "license": "MIT",
-    "version": "0.1.1",
+    "version": "1.0.0-dev",
     "autoload": {
         "psr-4": {
             "Tilson\\GitReportPhp\\": "src/"
